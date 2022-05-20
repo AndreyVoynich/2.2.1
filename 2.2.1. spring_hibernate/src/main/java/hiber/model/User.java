@@ -1,5 +1,7 @@
 package hiber.model;
 
+import org.springframework.context.annotation.ComponentScan;
+
 import javax.persistence.*;
 
 @Entity
@@ -19,8 +21,15 @@ public class User {
    @Column(name = "email")
    private String email;
 
+   @Column(name = "car_id", insertable = false, updatable = false)
+   private Long car_id;
+
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "car_id", referencedColumnName = "id")
+   private Car user_car;
+
    public User() {}
-   
+
    public User(String firstName, String lastName, String email) {
       this.firstName = firstName;
       this.lastName = lastName;
@@ -57,5 +66,24 @@ public class User {
 
    public void setEmail(String email) {
       this.email = email;
+   }
+
+   public Car getUser_car() {
+      return user_car;
+   }
+
+   public void setUser_car(Car user_car) {
+      this.user_car = user_car;
+   }
+
+   @Override
+   public String toString() {
+      return "User{" +
+              "id=" + id +
+              ", firstName='" + firstName + '\'' +
+              ", lastName='" + lastName + '\'' +
+              ", email='" + email + '\'' +
+              ", user_car=" + user_car +
+              '}';
    }
 }
